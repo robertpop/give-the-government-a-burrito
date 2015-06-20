@@ -1,28 +1,28 @@
 angular.module('jsCodingTest', [
-    // Add module dependencies here.
     'cpLib'
 ]);
 
 angular.module('jsCodingTest').controller('GiveTheGovernmentABurrito', function($scope, PackagesFactory) {
-    // Your JavaScript goes here.
-    // Your code should use our JS library's `PackagesFactory.searchPackages` method to search
-    // for burritos that can be delivered to the Houses of Parliament in London.
-    // The API URL that should be called is:
-    // https://api.citypantry.com/packages/search?name=Burrito&postcode=SW1A%200AA
+
+    $scope.errorFlag = false;
+    $scope.noPackagesMsg = "There are no packages matching this criteria at the moment.";
 
     var loadPackages = function() {
         PackagesFactory.searchPackages("Burrito", "SW1A%200AA")
             .success(function (res) {
+                console.log(res);
                 $scope.packages = res.packages;
             })
             .error(function (err) {
-                $scope.error = "Loading packages has failed: " + err.message;
+                $scope.errorFlag = true;
+                $scope.errorMsg = "The request has failed! "; // + err.message;
             });
     };
     loadPackages();
 
     $scope.reloadPackages = function() {
         $scope.packages = [];
+        $scope.errorFlag = false;
         loadPackages();
     };
 

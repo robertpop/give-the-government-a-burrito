@@ -1,0 +1,8 @@
+# PhpStorm
+.idea
+
+# Logs
+*.log
+
+# Dependencies
+node_modules
